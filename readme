@@ -1,0 +1,449 @@
+# 🨠 DOM JavaScript - Cours complet pour débutants
+
+## 🌳 Partie 1 : Introduction au DOM
+
+### Qu’est-ce que le DOM ?
+Le **DOM** (Document Object Model) est une représentation sous forme d’arbre de tous les éléments HTML d’une page web. Chaque élément (balise HTML) devient un **nœud** dans cet arbre, ce qui permet à JavaScript d’accéder, modifier, ajouter ou supprimer dynamiquement du contenu.
+
+### Exemple : Afficher la structure du document
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <script>
+    console.log(document); // Affiche l'objet DOM dans la console
+  </script>
+</head>
+<body>
+  <h1>Hello DOM</h1>
+</body>
+</html>
+```
+
+---
+
+## 🔍 Partie 2 : Accéder aux éléments du DOM
+
+### 1. `document.querySelector()`
+Renvoie le **premier élément** qui correspond au sélecteur CSS donné.
+
+#### Syntaxe :
+```js
+let element = document.querySelector('h1');
+```
+
+#### Exemple :
+```html
+<!-- index.html -->
+<h1 id="main-title">Bienvenue !</h1>
+<script>
+  let titre = document.querySelector('#main-title');
+  console.log(titre.textContent); // Affiche: Bienvenue !
+</script>
+```
+
+### 2. `document.getElementById()`
+Renvoie l’élément avec un **ID** spécifique.
+
+#### Syntaxe :
+```js
+let el = document.getElementById('id');
+```
+
+#### Exemple :
+```html
+<!-- index.html -->
+<p id="intro">Ceci est une introduction.</p>
+<script>
+  let paragraphe = document.getElementById('intro');
+  console.log(paragraphe.textContent);
+</script>
+```
+
+### 3. `document.querySelectorAll()`
+Renvoie une **NodeList** statique de tous les éléments correspondant à un sélecteur CSS.
+
+#### Syntaxe :
+```js
+let elements = document.querySelectorAll('span');
+```
+
+#### Exemple :
+```html
+<!-- index.html -->
+<span>Texte 1</span>
+<span>Texte 2</span>
+<script>
+  let spans = document.querySelectorAll('span');
+
+  // La méthode forEach permet de boucler sur chaque élément de la NodeList :
+  spans.forEach(function(el) {
+    console.log(el.textContent);
+  });
+
+  // OU version courte avec une fonction flèche :
+  // spans.forEach(el => console.log(el.textContent));
+</script>
+```
+
+#### ☝ Définition : `forEach()`
+- `forEach()` est une **méthode** utilisée pour **parcourir chaque élément** d'un tableau ou d'une NodeList.
+- Elle prend en paramètre une fonction qui sera appelée pour **chaque élément**.
+
+#### Exemple simple :
+```js
+let nombres = [1, 2, 3];
+nombres.forEach(function(nombre) {
+  console.log(nombre);
+});
+```
+
+---
+
+### 4. `document.getElementsByClassName()`
+Renvoie une **HTMLCollection** de tous les éléments ayant un nom de classe donné.
+
+#### Syntaxe :
+```js
+let elements = document.getElementsByClassName('ma-classe');
+```
+
+#### Exemple :
+```html
+<!-- index.html -->
+<div class="ma-classe">Elément A</div>
+<div class="ma-classe">Elément B</div>
+<script>
+  let divs = document.getElementsByClassName('ma-classe');
+
+  // divs[0] accède au **premier élément** dans la collection.
+  // textContent permet de lire le texte à l'intérieur de la balise.
+
+  console.log(divs[0].textContent); // Affiche: Elément A
+</script>
+```
+
+#### 🔹 Décomposition de `divs[0].textContent`
+- `divs` est une **HTMLCollection** (comme un tableau).
+- `divs[0]` accède au **premier élément** de cette collection.
+- `.textContent` permet de **lire ou modifier le texte** contenu dans cet élément HTML.
+
+#### Exemple plus visuel :
+```js
+let div = divs[0];
+console.log(div);             // Affiche la balise <div>Elément A</div>
+console.log(div.textContent); // Affiche: Elément A
+```
+
+### 5. `document.getElementsByTagName()`
+Renvoie une **HTMLCollection** de tous les éléments avec le nom de balise spécifié.
+
+#### Syntaxe :
+```js
+let elements = document.getElementsByTagName('div');
+```
+
+#### Exemple :
+```html
+<!-- index.html -->
+<div>Bloc 1</div>
+<div>Bloc 2</div>
+<script>
+  let blocs = document.getElementsByTagName('div');
+  console.log(blocs.length); // Affiche: 2
+</script>
+```
+
+---
+
+## 🛠️ Partie 3 : Manipuler les éléments du DOM
+
+### 1. Modifier le contenu : `textContent` et `innerHTML`
+
+#### 🧠 Définition :
+- `textContent` : Modifie ou lit **le texte** à l’intérieur d’un élément HTML.
+- `innerHTML` : Modifie ou lit **le HTML complet** à l’intérieur d’un élément (y compris les balises).
+
+#### ✏️ Exemple :
+```html
+<!-- index.html -->
+<h2 id="titre">Bonjour</h2>
+<div id="contenu">Texte simple</div>
+
+<script>
+  document.getElementById('titre').textContent = 'Bienvenue sur mon site';
+  document.getElementById('contenu').innerHTML = '<strong>Contenu important</strong>';
+</script>
+```
+
+### 2. Créer et ajouter des éléments dynamiquement
+
+#### 🧠 Mots-clés :
+- `createElement('balise')` : crée un nouvel élément HTML (non encore affiché).
+- `appendChild(element)` : ajoute un enfant à un élément du DOM.
+
+#### ✏️ Exemple :
+```html
+<!-- index.html -->
+<ul id="liste"></ul>
+
+<script>
+  let nouvelItem = document.createElement('li');
+  nouvelItem.textContent = 'Item ajouté dynamiquement';
+  document.getElementById('liste').appendChild(nouvelItem);
+</script>
+```
+
+### 3. Supprimer un élément
+
+#### 🧠 Mots-clés :
+- `removeChild(element)` : supprime un enfant d’un élément.
+- `element.remove()` : supprime l’élément directement.
+
+#### ✏️ Exemple :
+```html
+<!-- index.html -->
+<div id="zone">
+  <p id="a-supprimer">Ce texte sera supprimé</p>
+</div>
+
+<script>
+  let parent = document.getElementById('zone');
+  let enfant = document.getElementById('a-supprimer');
+  parent.removeChild(enfant);
+  // OU : document.getElementById('a-supprimer').remove();
+</script>
+```
+
+### 4. Gérer les événements : `addEventListener`
+
+#### 🧠 Définition :
+`addEventListener('type', fonction)` permet de **réagir à une action de l’utilisateur** (clic, survol, saisie...).
+
+#### ✏️ Exemple :
+```html
+<!-- index.html -->
+<button id="btn">Clique-moi</button>
+
+<script>
+  document.getElementById('btn').addEventListener('click', function() {
+    alert('Tu as cliqué sur le bouton !');
+  });
+</script>
+```
+
+### 5. Lire les valeurs d’un formulaire
+
+#### 🧠 Contexte :
+Les formulaires permettent à l’utilisateur d’entrer des données. En JavaScript, on peut lire ces valeurs et les utiliser dynamiquement.
+
+#### ✏️ Exemple :
+```html
+<!-- index.html -->
+<form id="mon-form">
+  <input type="text" id="nom" placeholder="Entre ton nom">
+  <button type="submit">Envoyer</button>
+</form>
+
+<script>
+  document.getElementById('mon-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let nom = document.getElementById('nom').value;
+    alert('Bonjour ' + nom);
+  });
+</script>
+```
+
+---
+
+## 🎓 Projet final DOM : Mini panier interactif (HTML + JS)
+à suivre...
+
+
+
+
+Super Cheikh ! Voici maintenant **la leçon complète du projet Panier Interactif**, pensée pour que tu puisses **la dérouler en classe pas à pas**, en expliquant chaque ligne de code et concept.
+
+---
+
+# 🛒 Projet Pratique : Panier Interactif avec JavaScript
+
+## 🎯 Objectif pédagogique
+
+Apprendre à :
+- Sélectionner des éléments HTML avec JavaScript
+- Modifier dynamiquement du contenu (`textContent`, `innerHTML`)
+- Gérer des événements (`onclick`, `addEventListener`)
+- Créer une interaction de type panier (afficher, ajouter, vider)
+- Manipuler le `style.display`
+- Travailler avec des tableaux pour gérer les données du panier
+
+---
+
+## 🔧 Étape 1 : Description du projet
+
+On va créer une petite page web avec :
+- Une **barre de navigation**
+- Des **produits affichés**
+- Un **panier en haut à droite**
+- La possibilité d’**ajouter un produit au panier**
+- Voir le contenu du panier
+- **Vider le panier**
+
+---
+
+## 🧱 Étape 2 : Structure HTML de base
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Panier Interactif</title>
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
+  <style>
+    /* Styles pour que l’élève voie bien l’impact de JS */
+  </style>
+</head>
+<body>
+  <!-- Barre de navigation -->
+  <nav>
+    <ul>
+      <li>Accueil</li>
+      <li>À propos</li>
+      <li>Nos Produits</li>
+      <li>Contact</li>
+    </ul>
+    <div id="panier-icon" onclick="afficherPanier()">
+      <i class="las la-shopping-cart"></i>
+      <span id="nombre-articles">0</span>
+    </div>
+  </nav>
+
+  <!-- Liste des produits -->
+  <section id="produits">
+    <div class="produit">
+      <img src="image1.jpg">
+      <h3>Produit 1</h3>
+      <button onclick="ajouterAuPanier('Produit 1')">Ajouter au panier</button>
+    </div>
+    <!-- 2 autres produits identiques -->
+  </section>
+
+  <!-- Contenu du panier (au départ caché) -->
+  <div id="contenu-panier" style="display: none;">
+    <h2>Contenu du Panier</h2>
+    <ul id="liste-panier"></ul>
+    <button onclick="viderPanier()">Vider le panier</button>
+  </div>
+
+  <script>
+    // Partie JS ici ⬇️
+  </script>
+</body>
+</html>
+```
+
+---
+
+## 💡 Étape 3 : JavaScript expliqué ligne par ligne
+
+### Variables de départ :
+```js
+let panier = [];
+let listePanier = document.getElementById("liste-panier");
+let compteur = document.getElementById("nombre-articles");
+let panneauPanier = document.getElementById("contenu-panier");
+```
+
+- `panier = []` → tableau vide pour stocker les produits
+- `getElementById()` → sélectionne l’élément pour l’utiliser ensuite
+
+### Ajouter un produit :
+```js
+function ajouterAuPanier(nomProduit) {
+  panier.push(nomProduit); // ajoute dans le tableau
+  compteur.textContent = panier.length; // met à jour le nombre affiché
+  mettreAJourPanier();
+}
+```
+
+- `push()` → ajoute un élément à la fin du tableau
+- `textContent` → modifie le texte visible à l’écran
+
+### Afficher le panier :
+```js
+function afficherPanier() {
+  panneauPanier.style.display = panneauPanier.style.display === "none" ? "block" : "none";
+}
+```
+
+- `style.display` → change l'affichage CSS de l'élément
+- Le `?` est un opérateur conditionnel :
+  - si `none` → on l’affiche
+  - sinon → on le cache
+
+### Mise à jour du panier :
+```js
+function mettreAJourPanier() {
+  listePanier.innerHTML = "";
+  panier.forEach(function(produit) {
+    let li = document.createElement("li");
+    li.textContent = produit;
+    listePanier.appendChild(li);
+  });
+}
+```
+
+- `innerHTML = ""` → on vide la liste actuelle
+- `forEach()` → on parcourt chaque élément du panier
+- `createElement("li")` → on crée un nouvel élément HTML
+- `appendChild()` → on ajoute cet élément dans la liste
+
+### Vider le panier :
+```js
+function viderPanier() {
+  panier = [];
+  compteur.textContent = "0";
+  mettreAJourPanier();
+}
+```
+
+- On vide le tableau et remet tout à 0
+
+---
+
+## 📚 Partie 4 : Explication de chaque concept JS utilisé
+
+| Syntaxe | Signification | Exemple dans le projet |
+|--------|----------------|------------------------|
+| `onclick="fonction()"` | Déclenche une action quand on clique | Ajouter au panier, vider |
+| `element.textContent` | Lire ou écrire le **texte brut** d’un élément | `compteur.textContent = panier.length;` |
+| `element.innerHTML` | Lire ou écrire du HTML (balises) | Vide la liste `<ul>` pour la mettre à jour |
+| `createElement("li")` | Crée dynamiquement un élément HTML | Créer un nouveau produit dans la liste |
+| `appendChild()` | Ajoute un élément enfant dans un autre | Ajouter `<li>` dans `<ul>` |
+| `style.display` | Contrôle l'affichage (visible ou non) | Cacher ou montrer le panier |
+| `push()` | Ajoute un élément dans un tableau | `panier.push(nomProduit)` |
+| `forEach()` | Boucle sur tous les éléments d’un tableau | `panier.forEach(...)` |
+
+---
+
+## 🧾 Partie 5 : Récapitulatif DOM et événements à connaître
+
+| Catégorie | Méthodes ou concepts | Exemple |
+|----------|----------------------|---------|
+| Sélection | `getElementById` | `document.getElementById("monId")` |
+| Sélection | `querySelector` | `document.querySelector(".btn")` |
+| Création | `createElement()` | `document.createElement("div")` |
+| Insertion | `appendChild()` | `div.appendChild(p)` |
+| Suppression | `removeChild()` | `parent.removeChild(child)` |
+| Événement | `onclick` | `<button onclick="go()">` |
+| Événement | `addEventListener` | `el.addEventListener("click", fct)` |
+| Style | `element.style.display` | Cacher/afficher avec JS |
+| Texte | `textContent`, `innerHTML` | Lire ou modifier contenu |
+| Tableau | `push()`, `forEach()` | Ajouter/boucler |
+
+---
+
