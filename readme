@@ -1,6 +1,3 @@
-# 🨠 DOM JavaScript - Cours complet pour débutants
-
-## 🌳 Partie 1 : Introduction au DOM
 
 ### Qu’est-ce que le DOM ?
 Le **DOM** (Document Object Model) est une représentation sous forme d’arbre de tous les éléments HTML d’une page web. Chaque élément (balise HTML) devient un **nœud** dans cet arbre, ce qui permet à JavaScript d’accéder, modifier, ajouter ou supprimer dynamiquement du contenu.
@@ -264,7 +261,7 @@ Les formulaires permettent à l’utilisateur d’entrer des données. En JavaSc
 
 
 
-Super Cheikh ! Voici maintenant **la leçon complète du projet Panier Interactif**, pensée pour que tu puisses **la dérouler en classe pas à pas**, en expliquant chaque ligne de code et concept.
+
 
 ---
 
